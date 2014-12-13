@@ -1,0 +1,23 @@
+#:import random random.random
+<CustomScreen>:
+    hue: random()
+    canvas:
+        Color:
+            hsv: self.hue, .5, .3
+        Rectangle:
+            size: self.size
+
+    Label:
+        font_size: 42
+        text: root.name
+        size_hint: 1,0.2
+        pos_hint: {'top':1}
+<TopAction>:
+    pos_hint: {'top':1}
+    ActionView:
+        id: av
+        use_separator: True
+        ActionPrevious:
+            title: 'Main Page'
+            with_previous: True
+        ActionOverflow:
