@@ -1,3 +1,8 @@
+__author__ = "Saptarshi Gan"
+__copyright__ = "Copyright (C) 2014 Saptarshi Gan"
+__license__ = "GNU GENERAL PUBLIC LICENSE Version 2"
+__version__ = "1.0"
+
 from kivy.uix.button import Button
 from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.floatlayout import FloatLayout
@@ -90,7 +95,6 @@ class MyScatter(Scatter):
 			for child in parent.children:
 				if (child != self) :
 					child.children[0].state = 'pause'
-			#print "PARENT125",self.parent
 			self.children[0].state = 'play'
 			return True
 
@@ -105,7 +109,11 @@ class VideoLayout(FloatLayout):
 
 	def body_layout(self):
 		layout = self
-		curdir = join(dirname(__file__),self.par_folder)
+		from main import SOURCE
+		if SOURCE:
+			curdir = SOURCE
+		else:
+			curdir = join(dirname(__file__),self.par_folder)
 		pos_x = pos_y =0
 		thumb_folder = "thumbs"
 		for filename in glob(join(curdir,self.folder,'*')):
@@ -134,21 +142,17 @@ class TopAction(ActionBar):
     """docstring for TopAction"""
     def __init__(self,dirs):
         super(TopAction, self).__init__()
-        #self.canvas.add(Color(1,1,0))
         av = self.children[0]
-        #av =ActionView(use_seperator=True)
         for d in dirs:
             b = ActionButton(text=d)
             b.bind(on_release=self.callback)
             av.add_widget(b)
-        #self.add_widget(av)
     def callback(self,button):
         screen = self.parent
         text = button.text
         videos = screen.children[0].children
         self.pause_videos(videos)
         screen.manager.current = text
-        #screen.manager.current = text
 
     def pause_videos(self,videos):
         for scatter in videos:

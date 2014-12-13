@@ -1,3 +1,8 @@
+__author__ = "Saptarshi Gan"
+__copyright__ = "Copyright (C) 2014 Saptarshi Gan"
+__license__ = "GNU GENERAL PUBLIC LICENSE Version 2"
+__version__ = "1.0"
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.screenmanager import RiseInTransition
@@ -20,7 +25,11 @@ class VideoManagerApp(App):
     def build(self):
         curdir = os.path.dirname(__file__)
         video_folder = 'videos'
-        dirname = os.path.join(curdir,video_folder)
+        from main import SOURCE
+        if SOURCE:
+            dirname = SOURCE
+        else:
+            dirname = os.path.join(curdir,video_folder)
         dirs= [d for d in os.listdir(dirname) if os.path.isdir(dirname)]
         custom = CustomScreen(name='Main Page')
         g=GridLayout(cols=2,pos_hint={'top':0.8},size_hint=(1,0.8))
@@ -39,7 +48,6 @@ class VideoManagerApp(App):
             full_layout = video_layout.body_layout()
             custom_child.add_widget(ab)
             custom_child.add_widget(full_layout)
-            #b.on_release = sm.switch_to(custom_child)
             b.bind(on_release=self.callback)
         self.sm.transition = FallOutTransition()
         return self.sm
